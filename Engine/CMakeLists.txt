@@ -27,6 +27,11 @@ set(UTENGINE_SOURCES_PLATFORM
     "Platform/Executable.hpp"
     "Platform/FileSystem.cpp"
     "Platform/FileSystem.hpp"
+    "Platform/ApplicationWindow.cpp"
+    "Platform/ApplicationWindow.hpp"
+)
+
+set(UTENGINE_SOURCES_RENDERING
 )
 
 set(UTENGINE_SOURCES
@@ -37,6 +42,7 @@ set(UTENGINE_SOURCES
     ${UTENGINE_SOURCES_DEPENDENCIES}
     ${UTENGINE_SOURCES_MATH}
     ${UTENGINE_SOURCES_PLATFORM}
+    ${UTENGINE_SOURCES_RENDERING}
 )
 
 add_library(UTEngine SHARED ${UTENGINE_SOURCES})

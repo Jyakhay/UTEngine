@@ -1,6 +1,8 @@
 #pragma once
 
 #include <chrono>
+#include <ctime>
+#include <features.h>
 
 namespace UTE
 {
@@ -33,12 +35,16 @@ namespace UTE
 
             std::tm TimeInfo;
 
-            localtime_s(&TimeInfo, &Time);
+            #ifdef MSVC
+                localtime_s(&TimeInfo, &Time);
+            #else
+                localtime_r(&Time, &TimeInfo);
+            #endif
 
             return TimeSpan(TimeInfo);
         }
 
-        int Compare(const TimeSpan& Other)
+        int Compare(const TimeSpan& Other) const
         {
             std::tm TimeA{};
             TimeA.tm_sec = Seconds;

@@ -32,6 +32,11 @@ set(UTENGINE_SOURCES_PLATFORM
 )
 
 set(UTENGINE_SOURCES_RENDERING
+        Rendering/RenderingAPI.hpp
+        Rendering/OpenGL/OGLRenderingAPI.cpp
+        Rendering/OpenGL/OGLRenderingAPI.hpp
+        Rendering/OpenGL/OGLDataTypes.cpp
+        Rendering/OpenGL/OGLDataTypes.hpp
 )
 
 set(UTENGINE_SOURCES
@@ -53,7 +58,6 @@ if(WIN32)
 
         UTENGINE_API=__declspec\(dllexport\) 
         REFLECTION_API=__declspec\(dllexport\)
-
     )
 
 else()
@@ -69,6 +73,7 @@ endif()
 
 target_include_directories(UTEngine PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${UTENGINE_ROOT_DIR}/Dependencies/glad/include/
 )
 
 target_link_libraries(UTEngine PRIVATE

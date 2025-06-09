@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
 struct GLFWwindow;
 
@@ -26,7 +27,8 @@ namespace UTE
 
 	private:
 
-		ApplicationWindow(uint16_t Width, uint16_t Height, EWindowFlagBits Flags);
+		ApplicationWindow(uint16_t Width, uint16_t Height, const std::string& Title, EWindowFlagBits Flags);
+		void EvaluateWindowFlags(EWindowFlagBits Flags);
 
 		GLFWwindow* mInternalWindow = nullptr;
 

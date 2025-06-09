@@ -13,11 +13,13 @@ namespace UTE
 		virtual bool Initialize() override;
 		virtual bool IsRequired() override;
 
+		void UpdateEvents() const;
+
 		virtual std::string GetDependencyName() override;
 		virtual EDependencyLoadGroup GetLoadGroup() override;
 
 	};
 
-	REGISTER_UTENGINE_DEPENDENCY(GLFWDependency, GLFW)
+	REGISTER_UTENGINE_DEPENDENCY(GLFWDependency, DependencyGLFW)
 
 }

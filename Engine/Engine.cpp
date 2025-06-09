@@ -1,6 +1,7 @@
 #include "Engine.hpp"
 
 #include "Core/DependencyManager.hpp"
+#include "Dependencies/GLFWDependency.hpp"
 
 namespace UTE
 {
@@ -15,6 +16,11 @@ namespace UTE
 		}
 
 		return true;
+	}
+
+	void GameEngine::Update()
+	{
+		DependencyGLFW->UpdateEvents();
 	}
 
 }

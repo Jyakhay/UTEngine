@@ -29,6 +29,8 @@ set(UTENGINE_SOURCES_PLATFORM
     "Platform/FileSystem.hpp"
     "Platform/ApplicationWindow.cpp"
     "Platform/ApplicationWindow.hpp"
+    "Platform/WindowManager.cpp"
+    "Platform/WindowManager.hpp"
 )
 
 set(UTENGINE_SOURCES_RENDERING

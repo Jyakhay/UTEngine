@@ -31,6 +31,7 @@ namespace UTE
 		void EvaluateWindowFlags(EWindowFlagBits Flags);
 
 		GLFWwindow* mInternalWindow = nullptr;
+		friend class WindowManager;
 
 	};
 

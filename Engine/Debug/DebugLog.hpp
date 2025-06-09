@@ -66,3 +66,4 @@ namespace UTE
 
 #define UTENGINE_LOG(Source, Severity, Message) UTE::DebugLogger::Log(Source, Severity, Message)
 #define UTENGINE_LOGFMT(Source, Severity, Message, ...) UTE::DebugLogger::LogFmt(Source, Severity, Message, __VA_ARGS__)
+#define UTENGINE_DEFINE_LOG_SOURCE(SourceName, DisplayText) static constexpr const char* SourceName = DisplayText;

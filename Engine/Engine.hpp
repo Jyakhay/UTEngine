@@ -10,6 +10,8 @@ namespace UTE
 
 		bool UTENGINE_API Initialize();
 
+		void UTENGINE_API Update();
+
 	private:
 
 	};

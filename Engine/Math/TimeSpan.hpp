@@ -2,7 +2,6 @@
 
 #include <chrono>
 #include <ctime>
-#include <features.h>
 
 namespace UTE
 {
@@ -35,11 +34,11 @@ namespace UTE
 
             std::tm TimeInfo;
 
-            #ifdef MSVC
+#ifdef COMPILER_MSVC
                 localtime_s(&TimeInfo, &Time);
-            #else
+#else
                 localtime_r(&Time, &TimeInfo);
-            #endif
+#endif
 
             return TimeSpan(TimeInfo);
         }

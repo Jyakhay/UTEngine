@@ -21,10 +21,12 @@ namespace UTE
 	public:
 
 		template<class T>
-		static void RegisterDependency()
+		static T* RegisterDependency()
 		{
 			T* NewDependency = new T();
 			mRegisteredDependencies[NewDependency->GetLoadGroup()].push_back(NewDependency);
+
+			return NewDependency;
 		}
 
 		static bool LoadDependencyGroup(EDependencyLoadGroup Group);
@@ -40,9 +42,15 @@ namespace UTE
 	{
 		StaticDependencyRegister()
 		{
-			DependencyManager::RegisterDependency<T>();
+			Instance = DependencyManager::RegisterDependency<T>();
 		}
+
+		T* Instance = nullptr;
 	};
 
-	#define REGISTER_UTENGINE_DEPENDENCY(DependencyType, DependencyName) static inline StaticDependencyRegister<DependencyType> DependencyName = StaticDependencyRegister<DependencyType>();
+	#define REGISTER_UTENGINE_DEPENDENCY(DependencyType, DependencyName) \
+	inline StaticDependencyRegister<DependencyType> DepReg = StaticDependencyRegister<DependencyType>();\
+	inline DependencyType* DependencyName = DepReg.Instance;
+	
+	
 }

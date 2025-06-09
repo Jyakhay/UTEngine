@@ -6,6 +6,8 @@
 namespace UTE
 {
 
+	UTENGINE_DEFINE_LOG_SOURCE(LogGLFW, "GLFW");
+
 	bool GLFWDependency::Initialize()
 	{
 		if (!glfwInit())
@@ -13,7 +15,7 @@ namespace UTE
 			const char* ErrorMessage;
 			glfwGetError(&ErrorMessage);
 
-			UTENGINE_LOGFMT("GLFW", ELogSeverity::Error, "Error initializing glfw: \"{}\"", ErrorMessage);
+			UTENGINE_LOGFMT(LogGLFW, ELogSeverity::Error, "Error initializing glfw: \"{}\"", ErrorMessage);
 			return false;
 		}
 
@@ -23,6 +25,11 @@ namespace UTE
 	bool GLFWDependency::IsRequired()
 	{
 		return true;
+	}
+
+	void GLFWDependency::UpdateEvents() const
+	{
+		glfwPollEvents();
 	}
 
 	std::string GLFWDependency::GetDependencyName()

@@ -1,8 +1,13 @@
 #pragma once
 #include <cstdint>
 
-namespace UTE
+namespace UTE::GLTypes
 {
+
+    struct OpenGLState
+    {
+        ApplicationWindow* WindowContext = nullptr;
+    };
 
     struct OpenGLBuffer
     {

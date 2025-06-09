@@ -10,9 +10,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Binaries/)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     add_compile_definitions(COMPILER_MSVC)
-elif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_definitions(COMPILER_CLANG)
-elif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     add_compile_definitions(COMPILER_GNU)
 endif()
 

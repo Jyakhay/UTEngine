@@ -8,6 +8,7 @@
 
 namespace UTE
 {
+    UTENGINE_DEFINE_LOG_SOURCE(LogDebugLogger, "DebugLogger")
 
     void DebugLogger::Log(const std::string& Source, ELogSeverity Severity, const std::string& Message)
     {
@@ -17,7 +18,6 @@ namespace UTE
             GetSeverityString(Severity),
             Message
         );
-        
         std::cout << OutputMessage;
         
         if(mSessionActive)
@@ -48,7 +48,7 @@ namespace UTE
 
         mSessionActive = true;
 
-        UTENGINE_LOG("DebugLogger", ELogSeverity::Message, "--------Debug Log Session Begin--------");
+        UTENGINE_LOG(LogDebugLogger, ELogSeverity::Message, "--------Debug Log Session Begin--------");
         return true;
     }
 
@@ -59,7 +59,7 @@ namespace UTE
             return false;
         }
 
-        UTENGINE_LOG("DebugLogger", ELogSeverity::Message, "--------Debug Log Session End--------");
+        UTENGINE_LOG(LogDebugLogger, ELogSeverity::Message, "--------Debug Log Session End--------");
         
         mSessionActive = false;
         mLogStream.close();

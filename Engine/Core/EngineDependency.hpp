@@ -13,9 +13,16 @@ namespace UTE
 
 		virtual bool Initialize() = 0;
 		virtual bool IsRequired() = 0;
+
+		bool IsInitialized() const;
 		
 		virtual std::string GetDependencyName();
 		virtual EDependencyLoadGroup GetLoadGroup() = 0;
+
+	private:
+
+		bool mIsInitialized = false;
+		friend class DependencyManager;
 
 	};
 

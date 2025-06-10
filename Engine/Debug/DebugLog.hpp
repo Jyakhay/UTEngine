@@ -23,8 +23,10 @@ namespace UTE
 
     public:
 
+        /*Outputs a message to the console, and if a log session has begun, the log file.*/
         static void UTENGINE_API Log(const std::string& Source, ELogSeverity Severity, const std::string& Message);
         
+        /*Outputs a message to the console, and if a log session has begun, the log file.*/
         template<class... Args>
         static void LogFmt(const std::string& Source, ELogSeverity Severity, const std::string& Message, Args... LogArgs)
         {
@@ -44,7 +46,11 @@ namespace UTE
         }
         
         //TODO - Allow log directory to be specified
+
+        /*Creates a new log file and removes old log files if more than mMaxLogCount files exist.*/
         static bool UTENGINE_API BeginLogSession();
+
+        /*Stops writing to the log file, if a session has begun.*/
         static bool UTENGINE_API EndLogSession();
 
     private:

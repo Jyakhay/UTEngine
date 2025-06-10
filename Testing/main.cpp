@@ -1,21 +1,22 @@
 #include "Engine.hpp"
+#include "SandboxApp.hpp"
 
-#include "Platform/WindowManager.hpp"
-
-int main()
+int main(int ArgC, char* ArgV[])
 {
-	if (!UTE::GEngine->Initialize())
+	if (UTE::GEngine->Initialize(ArgC, ArgV))
+	{
+		SandboxApp* TestApp = UTE::GEngine->CreateApplication<SandboxApp>();
+
+		while (UTE::GEngine->IsRunning())
+		{
+			UTE::GEngine->Update();
+		}
+	}
+	else
 	{
 		return -1;
 	}
 
-	UTE::WindowManager Manager;
-	Manager.CreateNewWindow("GameWindow", 640, 480, "Sandbox", 0);
-
-	while (true)
-	{
-		UTE::GEngine->Update();
-	}
-
+	UTE::GEngine->Shutdown();
 	return 0;
 }

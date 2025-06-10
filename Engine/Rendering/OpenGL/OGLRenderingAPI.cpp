@@ -4,13 +4,14 @@
 #include <GLFW/glfw3.h>
 
 #include "Platform/ApplicationWindow.hpp"
+#include "Rendering/RenderManager.hpp"
 
 namespace UTE
 {
 
     UTENGINE_DEFINE_LOG_SOURCE(LogOpenGLAPI, "OpenGL")
 
-    bool OGLRenderingAPI::InitializeAPI(ApplicationWindow* OwningWindow)
+    bool OGLRenderingAPI::InitializeAPI(std::weak_ptr<ApplicationWindow>& OwningWindow)
     {
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
@@ -19,6 +20,8 @@ namespace UTE
         }
 
         GraphicsState.WindowContext = OwningWindow;
+        glCreateVertexArrays(1, &GraphicsState.VertexArrayObject);
+        glBindVertexArray(GraphicsState.VertexArrayObject);
 
         glEnable(GL_DEPTH_TEST);
 
@@ -38,6 +41,25 @@ namespace UTE
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     }
 
+    void OGLRenderingAPI::SetCurrentVertexLayout(VertexLayout& NewLayout)
+    {
+        GraphicsState.CurrentVertexLayout = NewLayout;
+
+        for (uint32_t i = 0; i < NewLayout.GetNumElements(); i++)
+        {
+            const VertexElement& CurrentElement = NewLayout.GetElementAtIndex(i);
+
+            glEnableVertexArrayAttrib(GraphicsState.VertexArrayObject, i);
+            glVertexArrayAttribFormat(GraphicsState.VertexArrayObject, i, CurrentElement.Components, GetOpenGLVertexDataType(CurrentElement.DataType), GL_FALSE, CurrentElement.Offset);
+            glVertexArrayAttribBinding(GraphicsState.VertexArrayObject, i, 0);
+        }
+    }
+
+    const VertexLayout& OGLRenderingAPI::GetCurrentVertexLayout()
+    {
+        return GraphicsState.CurrentVertexLayout;
+    }
+
     void OGLRenderingAPI::CreateBuffer(uint32_t Size, BufferHandle* OutHandle)
     {
         GLTypes::OpenGLBuffer* NewBuffer = new GLTypes::OpenGLBuffer();
@@ -46,7 +68,14 @@ namespace UTE
         glNamedBufferStorage(NewBuffer->BufferID, Size, nullptr, GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
         NewBuffer->BufferSize = Size;
 
-        *OutHandle = BufferHandle(NewBuffer);
+        *OutHandle = BufferHandle
+        (
+            NewBuffer, 
+            [&](RenderHandle& InHandle) 
+            {
+                RenderManager::GetRenderingAPI()->DestroyBuffer(InHandle); 
+            }
+        );
     }
 
     void OGLRenderingAPI::SetBufferData(BufferHandle& InHandle, uint32_t DataSize, uint32_t Offset, void* DataPointer)
@@ -65,7 +94,7 @@ namespace UTE
 
     void OGLRenderingAPI::RefreshDisplay()
     {
-        glfwSwapBuffers(GraphicsState.WindowContext->GetInternalWindow());
+        glfwSwapBuffers(GraphicsState.WindowContext.lock()->GetInternalWindow());
     }
 
     const std::string OGLRenderingAPI::GetRenderAPIName()
@@ -196,5 +225,38 @@ namespace UTE
         }
 
         return ELogSeverity::Message;
+    }
+
+    uint32_t OGLRenderingAPI::GetOpenGLVertexDataType(EVertexDataType DataType)
+    {
+        switch (DataType)
+        {
+        case EVertexDataType::Byte:
+        {
+            return GL_BYTE;
+        }
+
+        case EVertexDataType::Short:
+        {
+            return GL_SHORT;
+        }
+
+        case EVertexDataType::Int:
+        {
+            return GL_INT;
+        }
+
+        case EVertexDataType::Float:
+        {
+            return GL_FLOAT;
+        }
+
+        case EVertexDataType::Double:
+        {
+            return GL_DOUBLE;
+        }
+        }
+
+        return 0;
     }
 }

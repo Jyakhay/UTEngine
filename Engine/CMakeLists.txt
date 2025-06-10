@@ -5,6 +5,8 @@ set(UTENGINE_SOURCES_CORE
     "Core/DependencyManager.hpp"
     "Core/EngineDependency.cpp"
     "Core/EngineDependency.hpp"
+    "Core/Application.cpp"
+    "Core/Application.hpp"
 )
 
 set(UTENGINE_SOURCES_DEBUG
@@ -34,11 +36,15 @@ set(UTENGINE_SOURCES_PLATFORM
 )
 
 set(UTENGINE_SOURCES_RENDERING
-        Rendering/RenderingAPI.hpp
-        Rendering/OpenGL/OGLRenderingAPI.cpp
-        Rendering/OpenGL/OGLRenderingAPI.hpp
-        Rendering/OpenGL/OGLDataTypes.cpp
-        Rendering/OpenGL/OGLDataTypes.hpp
+    "Rendering/RenderingAPI.hpp"
+    "Rendering/RenderManager.cpp"
+    "Rendering/RenderManager.hpp"
+    "Rendering/VertexLayout.cpp"
+    "Rendering/VertexLayout.hpp"
+    "Rendering/OpenGL/OGLRenderingAPI.cpp"
+    "Rendering/OpenGL/OGLRenderingAPI.hpp"
+    "Rendering/OpenGL/OGLDataTypes.cpp"
+    "Rendering/OpenGL/OGLDataTypes.hpp"
 )
 
 set(UTENGINE_SOURCES

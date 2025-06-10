@@ -2,6 +2,8 @@ project(EngineSandbox)
 
 set(SANDBOX_SOURCES
     "main.cpp"
+    "SandboxApp.cpp"
+    "SandboxApp.hpp"
 )
 
 add_executable(EngineSandbox ${SANDBOX_SOURCES})

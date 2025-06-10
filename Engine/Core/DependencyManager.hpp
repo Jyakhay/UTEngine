@@ -20,6 +20,7 @@ namespace UTE
 
 	public:
 
+		/*Registers a dependency, queuing it for initialization.*/
 		template<class T>
 		static T* RegisterDependency()
 		{
@@ -29,6 +30,7 @@ namespace UTE
 			return NewDependency;
 		}
 
+		/*Initializes all dependencies set to load at the specified load group.*/
 		static bool LoadDependencyGroup(EDependencyLoadGroup Group);
 
 	private:

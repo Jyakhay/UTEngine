@@ -21,7 +21,7 @@ namespace UTE
         static inline std::vector<std::string> mArgList = {};
         static inline bool mIsInit = false;
 
-        friend class NebulaEngine;
+        friend class GameEngine;
 
     };
 

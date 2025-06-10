@@ -14,6 +14,7 @@ namespace UTE
 		virtual bool Initialize() = 0;
 		virtual bool IsRequired() = 0;
 
+		/*Returns if this dependency has been initialized.*/
 		bool IsInitialized() const;
 		
 		virtual std::string GetDependencyName();

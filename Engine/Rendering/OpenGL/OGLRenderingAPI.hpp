@@ -17,9 +17,21 @@ namespace UTE
         virtual void SetCurrentVertexLayout(VertexLayout& NewLayout) override;
         virtual const VertexLayout& GetCurrentVertexLayout() override;
 
-        virtual void CreateBuffer(uint32_t Size, BufferHandle* OutHandle) override;
-        virtual void SetBufferData(BufferHandle& InHandle, uint32_t DataSize, uint32_t Offset, void* DataPointer);
-        virtual void DestroyBuffer(BufferHandle& InHandle) override;
+        virtual void BufferCreate(uint32_t Size, BufferHandle* OutHandle) override;
+        virtual void BufferSetData(BufferHandle& InHandle, uint32_t DataSize, uint32_t Offset, void* DataPointer) override;
+        virtual void BufferDestroy(BufferHandle& InHandle) override;
+
+        virtual void Texture1DCreate(ETextureFormat Format, uint32_t Size, uint32_t Levels, Texture1DHandle* OutTexture) override;
+        virtual void Texture2DCreate(ETextureFormat Format, uint32_t Width, uint32_t Height, uint32_t Levels, Texture2DHandle* OutTexture) override;
+        virtual void Texture3DCreate(ETextureFormat Format, uint32_t Width, uint32_t Height, uint32_t Depth, uint32_t Levels, Texture3DHandle* OutTexture) override;
+
+        virtual void Texture1DSetData(Texture1DHandle& InHandle, std::vector<unsigned char>& ImageData, uint32_t Offset) override;
+        virtual void Texture2DSetData(Texture2DHandle& InHandle, std::vector<unsigned char>& ImageData, uint32_t XOffset, uint32_t YOffset, uint32_t Width, uint32_t Height) override;
+        virtual void Texture3DSetData(Texture3DHandle& InHandle, std::vector<unsigned char>& ImageData, uint32_t XOffset, uint32_t YOffset, uint32_t ZOffset, uint32_t Width, uint32_t Height, uint32_t Depth) override;
+
+        virtual void Texture1DDestroy(Texture1DHandle& InHandle) = 0;
+        virtual void Texture2DDestroy(Texture2DHandle& InHandle) = 0;
+        virtual void Texture3DDestroy(Texture3DHandle& InHandle) = 0;
 
         virtual void RefreshDisplay() override;
 
@@ -32,7 +44,10 @@ namespace UTE
         static std::string OpenGLMessageTypeToString(uint32_t Type);
         static ELogSeverity OpenGLSeverityToLogSeverity(uint32_t Severity);
 
-        static uint32_t GetOpenGLVertexDataType(EVertexDataType DataType);
+        uint32_t GetOpenGLVertexDataType(EVertexDataType DataType);
+
+        uint32_t GetOpenGLInternalFormatType(ETextureFormat Format);
+        uint32_t GetOpenGLFormatType(ETextureFormat Format);
 
         GLTypes::OpenGLState GraphicsState;
 
